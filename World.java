@@ -1,14 +1,17 @@
 import java.awt.*;
-
-
 import java.util.*;
 import java.awt.image.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-
-import java.awt.*;
-import java.util.*;
+class Util
+{
+	public static final int MAX_R = 250;
+	public static final int PLAYER_RADIUS = 10;
+	public static final int ARROW_LENGTH = 5;
+	public static final double ARROW_SPEED = 7;
+	public static final double ENEMY_FREQUENCY = .01;
+}
 
 public class World
 {
@@ -915,12 +918,4 @@ class Division extends Enemy
 	{
 		return solution;
 	}
-}
-class Util
-{
-	public static final int MAX_R = 250;
-	public static final int PLAYER_RADIUS = 10;
-	public static final int ARROW_LENGTH = 5;
-	public static final double ARROW_SPEED = 7;
-	public static final double ENEMY_FREQUENCY = .01;
 }

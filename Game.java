@@ -1,12 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
 
-public class MathHero extends ListeningGameComponent
+public class Game extends ListeningGameComponent
 {
 	protected World world;
 	protected String typed;
 
-	public MathHero()
+	public Game()
 	{
 		super(Util.MAX_R*2,Util.MAX_R*2);
 		world = World.getWorld();
@@ -42,6 +42,6 @@ public class MathHero extends ListeningGameComponent
 
 	public static void main(String[] args)
 	{
-		new MathHero().makeTestWindow();
+		new Game().makeTestWindow();
 	}
 }
