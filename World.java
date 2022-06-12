@@ -309,11 +309,11 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	*/
 	public void mousePressed(MouseEvent e)
 	{
-		if(e.getButton() == e.BUTTON1)
+		if(e.getButton() == MouseEvent.BUTTON1)
 			mousePressed1 = true;
-		if(e.getButton() == e.BUTTON2)
+		if(e.getButton() == MouseEvent.BUTTON2)
 			mousePressed2 = true;
-		if(e.getButton() == e.BUTTON3)
+		if(e.getButton() == MouseEvent.BUTTON3)
 			mousePressed3 = true;
 	}
 
@@ -323,11 +323,11 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	*/
 	public void mouseReleased(MouseEvent e)
 	{
-		if(e.getButton() == e.BUTTON1)
+		if(e.getButton() == MouseEvent.BUTTON1)
 			mousePressed1 = false;
-		if(e.getButton() == e.BUTTON2)
+		if(e.getButton() == MouseEvent.BUTTON2)
 			mousePressed2 = false;
-		if(e.getButton() == e.BUTTON3)
+		if(e.getButton() == MouseEvent.BUTTON3)
 			mousePressed3 = false;
 	}
 
@@ -337,11 +337,11 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	*/
 	public void mouseDragged(MouseEvent e)
 	{
-		if(e.getButton() == e.BUTTON1)
+		if(e.getButton() == MouseEvent.BUTTON1)
 			mousePressed1 = !mousePressed1;
-		if(e.getButton() == e.BUTTON2)
+		if(e.getButton() == MouseEvent.BUTTON2)
 			mousePressed2 = !mousePressed2;
-		if(e.getButton() == e.BUTTON3)
+		if(e.getButton() == MouseEvent.BUTTON3)
 			mousePressed3 = !mousePressed3;
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -368,8 +368,8 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	public void keyPressed(KeyEvent e)
 	{
 		if(debug)
-			System.out.println(e.getKeyText(e.getKeyCode()));
-		keysPressed.add(e.getKeyText(e.getKeyCode()));
+			System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
+		keysPressed.add(KeyEvent.getKeyText(e.getKeyCode()));
 	}
 
 	/**
@@ -379,7 +379,7 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	{
 		for(int i = 0; i < keysPressed.size(); i++)
 		{
-			if(keysPressed.get(i).equals(e.getKeyText(e.getKeyCode())))
+			if(keysPressed.get(i).equals(KeyEvent.getKeyText(e.getKeyCode())))
 			{
 				keysPressed.remove(i);
 				i--;
@@ -630,7 +630,6 @@ abstract class GameComponent extends JPanel
 	{
 		JFrame frame = new JFrame();
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		GraphicsConfiguration gc = device.getDefaultConfiguration();
 		DisplayMode oldDisplayMode = device.getDisplayMode();
 		DisplayMode newDisplayMode = new DisplayMode(640, 480, (oldDisplayMode.getBitDepth()), (oldDisplayMode.getRefreshRate()));
 		frame.getContentPane().setLayout(null);
