@@ -71,7 +71,7 @@ public class World
 		player.draw(g);
 		g.setColor(Color.BLACK);
 		g.drawString("Level: "+(level+1),5,15);
-		g.drawString("Key: "+getLevel().key,Util.MAX_R*2-90,15);
+		// g.drawString("Key: "+getLevel().key,Util.MAX_R*2-90,15);
 		if(win)
 		{
 			g.setColor(Color.GREEN);
@@ -82,7 +82,7 @@ public class World
 		{
 			g.setColor(Color.RED);
 			g.setFont(new Font("Verdana",Font.BOLD,14));
-			g.drawString("You lose.",140,150);
+			g.drawString("You lose.",220,150);
 		}
 	}
 
@@ -613,13 +613,13 @@ class Player
 
 	public void draw(Graphics g)
 	{
-		g.setColor(Color.BLUE);
+		g.setColor(Color.MAGENTA);
 		g.fillOval(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS,Util.PLAYER_RADIUS*2,Util.PLAYER_RADIUS*2);
-		g.setColor(Color.RED);
+		g.setColor(Color.ORANGE);
 		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2,5);
 		g.setColor(Color.GREEN);
 		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2*health/maxHealth,5);
-		g.setColor(Color.BLUE);
+		g.setColor(Color.YELLOW);
 		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-1,
 			Util.PLAYER_RADIUS*2*exp/expToNextLevel,1);
 	}
@@ -628,8 +628,8 @@ class Player
 abstract class Enemy
 {
 	protected double r,t,speed;
-	protected Color color = Color.BLACK;
-	protected int radius = 5;
+	protected Color color = Color.RED;
+	protected int radius = 7;
 	private boolean dying1 = false;
 	private boolean dying2 = false;
 	private boolean dead = false;
