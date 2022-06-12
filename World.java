@@ -144,9 +144,76 @@ public class World
 		for(int i = 0; i < 1; i ++) l8e.add(new BigMultiplication());
 		for(int i = 0; i < 7; i ++) l8e.add(new Subtraction());
 		for(int i = 0; i < 7; i ++) l8e.add(new Division());
-		Level l8 = new Level(3,1738295,l8e);
+		Level l8 = new Level(3,2538610,l8e);
 
-		return new World(player,l1,l2,l3,l4,l5,l6,l7,l8);
+		//Level 9
+		Vector<Enemy> l9e = new Vector();
+		for(int i = 0; i < 5; i ++) l9e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l9e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l9e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l9e.add(new Division());
+		Level l9 = new Level(3,1527943,l9e);
+		
+		//Level 10
+		Vector<Enemy> l10e = new Vector();
+		for(int i = 0; i < 5; i ++) l10e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l10e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l10e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l10e.add(new Division());
+		Level l10 = new Level(3,4268197,l10e);
+
+		//Level 11
+		Vector<Enemy> l11e = new Vector();
+		for(int i = 0; i < 5; i ++) l11e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l11e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l11e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l11e.add(new Division());
+		Level l11 = new Level(3,1738295,l11e);
+
+		//Level 12
+		Vector<Enemy> l12e = new Vector();
+		for(int i = 0; i < 5; i ++) l12e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l12e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l12e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l12e.add(new Division());
+		Level l12 = new Level(3,0651243,l12e);
+
+
+		//Level 13
+		Vector<Enemy> l13e = new Vector();
+		for(int i = 0; i < 5; i ++) l13e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l13e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l13e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l13e.add(new Division());
+		Level l13 = new Level(3,3628491,l13e);
+
+
+		//Level 14
+		Vector<Enemy> l14e = new Vector();
+		for(int i = 0; i < 5; i ++) l14e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l14e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l14e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l14e.add(new Division());
+		Level l14 = new Level(3,4016275,l14e);
+
+
+		//Level 15
+		Vector<Enemy> l15e = new Vector();
+		for(int i = 0; i < 5; i ++) l15e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l15e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l15e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l15e.add(new Division());
+		Level l15 = new Level(3,6142063,l15e);
+
+		//Level 16
+		Vector<Enemy> l16e = new Vector();
+		for(int i = 0; i < 5; i ++) l16e.add(new BigAddition());
+		for(int i = 0; i < 1; i ++) l16e.add(new BigMultiplication());
+		for(int i = 0; i < 7; i ++) l16e.add(new Subtraction());
+		for(int i = 0; i < 7; i ++) l16e.add(new Division());
+		Level l16 = new Level(3,5390528,l16e);
+
+		return new World(player,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16);
 	}
 }
 
