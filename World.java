@@ -261,21 +261,17 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	public boolean debug = false;
 
 	/**
-	 * The x location of the mouse.
-	 */
+		The x location of the mouse.
+	*/
 	public int mouseX = 0;
 	/**
-	 * The y location of the mouse.
-	 */
+		The y location of the mouse.
+	*/
 	public int mouseY = 0;
 
 	/**
-	 * Constructs a ListeningGameComponent with a width of w, and a height of h.
-	 *
-	 * @param  w  width
-	 * @param  h  height
-	 * @see         JPanel
-	 */
+		Constructs a ListeningGameComponent with a width of w, and a height of h.
+	*/
 	public ListeningGameComponent(int w, int h)
 	{
 		super(w,h);
@@ -285,40 +281,32 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	}
 
 	/**
-	 * The method that draws the component.
-	 *
-	 * @param	g 	the {@link Graphics} on which the component will be drawn
-	 */
+		The method that draws the component.
+	*/
 	public abstract void draw(Graphics g);
-
-
 	/**
-	 * The method that updates the component.
-	 */
+		The method that updates the component.
+	*/
 	public abstract void update();
 
 	/**
-	 * Does nothing. Activated when the mouse is pressed and released.
-	 * @param	e	a mouse event
-	 */
+		Does nothing. Activated when the mouse is pressed and released.
+	*/
 	public void mouseClicked(MouseEvent e){}
 
 	/**
-	 * Does nothing. Activated when the mouse enters the component.
-	 * @param	e	a mouse event
-	 */
+		Does nothing. Activated when the mouse enters the component.
+	*/
 	public void mouseEntered(MouseEvent e){}
 
 	/**
-	 * Does nothing. Activated when the mouse exits the component.
-	 * @param	e	a mouse event
-	 */
+		Does nothing. Activated when the mouse exits the component.
+	*/
 	public void mouseExited(MouseEvent e){}
 
 	/**
-	 * Updates the mouse variables.
-	 * @param	e	a mouse event
-	 */
+		Updates the mouse variables.
+	*/
 	public void mousePressed(MouseEvent e)
 	{
 		if(e.getButton() == e.BUTTON1)
@@ -331,9 +319,8 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 
 
 	/**
-	 * Updates the mouse variables.
-	 * @param	e	a mouse event
-	 */
+		Updates the mouse variables.
+	*/
 	public void mouseReleased(MouseEvent e)
 	{
 		if(e.getButton() == e.BUTTON1)
@@ -346,9 +333,8 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 
 
 	/**
-	 * Updates the mouse variables.
-	 * @param	e	a mouse event
-	 */
+		Updates the mouse variables.
+	*/
 	public void mouseDragged(MouseEvent e)
 	{
 		if(e.getButton() == e.BUTTON1)
@@ -363,9 +349,8 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 
 
 	/**
-	 * Updates the mouse variables.
-	 * @param	e	a mouse event
-	 */
+		Updates the mouse variables.
+	*/
 	public void mouseMoved(MouseEvent e)
 	{
 		mousePressed1 = false;
@@ -378,9 +363,8 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 
 
 	/**
-	 * Updates the keyboard variables.
-	 * @param	e	a key event
-	 */
+		Updates the keyboard variables.
+	*/
 	public void keyPressed(KeyEvent e)
 	{
 		if(debug)
@@ -389,9 +373,8 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	}
 
 	/**
-	 * Updates the keyboard variables.
-	 * @param	e	a key event
-	 */
+		Updates the keyboard variables.
+	*/
 	public void keyReleased(KeyEvent e)
 	{
 		for(int i = 0; i < keysPressed.size(); i++)
@@ -405,16 +388,14 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	}
 
 	/**
-	 * Updates the keyboard variables.
-	 * @param	e	a key event
-	 */
+		Updates the keyboard variables.
+	*/
 	public void keyTyped(KeyEvent e){}
 
 	/**
-	 * Returns weather a mouse button is pressed.
-	 * @param	b	button number
-	 * @return	true if the button is pressed
-	 */
+		Returns weather a mouse button is pressed.
+		return true if the button is pressed
+	*/
 	public boolean isMousePressed(int b)
 	{
 		if(b == 1)
@@ -428,9 +409,9 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	}
 
 	/**
-	 * Returns weather any mouse button is pressed.
-	 * @return	true if the button is pressed
-	 */
+		Returns weather any mouse button is pressed.
+		return true if the button is pressed
+	*/
 	public boolean isMousePressed()
 	{
 		if(mousePressed1)
@@ -444,10 +425,9 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	}
 
 	/**
-	 * Returns weather a mouse button is pressed.
-	 * @param	k	the key pressed (Ex. "A", "B", "C"...")
-	 * @return	true if the key is pressed
-	 */
+		Returns weather a mouse button is pressed.
+		return true if the key is pressed
+	*/
 	public boolean isKeyPressed(String k)
 	{
 		for(int i = 0; i < keysPressed.size(); i++)
@@ -547,12 +527,8 @@ abstract class GameComponent extends JPanel
 	public int delay = 25;
 
 	/**
-	 * Constructs a GameComponent with a width of w, and a height of h.
-	 *
-	 * @param  w  width
-	 * @param  h  height
-	 * @see         JPanel
-	 */
+		Constructs a GameComponent with a width of w, and a height of h.
+	*/
 	public GameComponent(int w, int h)
 	{
 		super();
@@ -632,10 +608,8 @@ abstract class GameComponent extends JPanel
 	}
 
 	/**
-	 * Creates a {@link JFrame} that contains this GameComponent.
-	 *
-	 * @return	the {@link JFrame} created
-	 */
+		Creates a JFrame that contains this GameComponent.
+	*/
 	public JFrame makeTestWindow()
 	{
 		JFrame frame = new JFrame();
@@ -648,18 +622,17 @@ abstract class GameComponent extends JPanel
 	}
 
 	/**
-	 * Creates a fullscreen {@link JFrame} that contains this GameComponent.
-	 * <br>*Note that the width and height of the component must be 640x480
-	 *
-	 * @return	the {@link JFrame} created
-	 */
+		Creates a fullscreen JFrame that contains this GameComponent.
+		Note that the width and height of the component must be 640x480
+		return the JFrame created
+	*/
 	public JFrame makeFullScreenWindow()
 	{
 		JFrame frame = new JFrame();
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		GraphicsConfiguration gc = device.getDefaultConfiguration();
-  		DisplayMode oldDisplayMode = device.getDisplayMode();
-  	    DisplayMode newDisplayMode = new DisplayMode(640, 480, (oldDisplayMode.getBitDepth()), (oldDisplayMode.getRefreshRate()));
+		DisplayMode oldDisplayMode = device.getDisplayMode();
+		DisplayMode newDisplayMode = new DisplayMode(640, 480, (oldDisplayMode.getBitDepth()), (oldDisplayMode.getRefreshRate()));
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(this, 0, 0);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -680,32 +653,28 @@ abstract class GameComponent extends JPanel
 	}
 
 	/**
-	 * Preforms the standard updates of the component.(Preformed befor {@link #update()})
-	 */
+		Preforms the standard updates of the component.(Preformed before update() is called)
+	*/
 	public void standardUpdates()
 	{
 	}
 
 	/**
-	 * The method that draws the component.
-	 *
-	 * @param	g 	the {@link Graphics} on which the component will be drawn
-	 */
+		The method that draws the component.
+	*/
 	public abstract void draw(Graphics g);
 
 	/**
-	 * Draws the sandard parts of the component. (Preformed befor {@link #draw(Graphics)})
-	 *
-	 * @param	g 	the {@link Graphics} on which the component will be drawn
-	 */
+		Draws the standard parts of the component. (Preformed before draw(Graphics) is called)
+	*/
 	public void standardDraw(Graphics g)
 	{
 	}
 
 
 	/**
-	 * The method that updates the component.
-	 */
+		The method that updates the component.
+	*/
 	public abstract void update();
 }
 
