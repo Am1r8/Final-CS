@@ -217,110 +217,6 @@ public class World
 	}
 }
 
-class Subtraction extends Enemy
-{
-	protected String problem;
-	protected int solution;
-
-	public Subtraction()
-	{
-		super(.4);
-		int n1 = (int)(Math.random()*9)+1;
-		int n2 = (int)(Math.random()*9)+1;
-		solution = n1;
-		problem = ""+(n1+n2)+"-"+n2;
-		color = java.awt.Color.RED;
-	}
-
-	public String getProblem()
-	{
-		return problem;
-	}
-
-	public int getSolution()
-	{
-		return solution;
-	}
-}
-class Player
-{
-	protected int maxHealth = 100;
-	protected int health = maxHealth;
-	protected int exp = 0;
-	protected int expToNextLevel = 10;
-	protected int level = 1;
-
-	public void hit(int amount)
-	{
-		health-=amount;
-	}
-
-	public void heal()
-	{
-		health = maxHealth;
-	}
-
-	public boolean dead()
-	{
-		return health <= 0;
-	}
-
-	public void addExp(int amount)
-	{
-		exp+=amount;
-		while(exp>expToNextLevel)
-			levelUp();
-	}
-
-	public void levelUp()
-	{
-		exp-=expToNextLevel;
-		expToNextLevel*=2;
-		maxHealth+=25;
-		level++;
-	}
-
-	public void draw(Graphics g)
-	{
-		g.setColor(Color.BLUE);
-		g.fillOval(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS,Util.PLAYER_RADIUS*2,Util.PLAYER_RADIUS*2);
-		g.setColor(Color.RED);
-		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2,5);
-		g.setColor(Color.GREEN);
-		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2*health/maxHealth,5);
-		g.setColor(Color.BLUE);
-		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-1,
-			Util.PLAYER_RADIUS*2*exp/expToNextLevel,1);
-	}
-}
-
-class Multiplication extends Enemy
-{
-	protected String problem;
-	protected int solution;
-
-	public Multiplication()
-	{
-		super(.4);
-		int n1 = (int)(Math.random()*9)+1;
-		int n2 = (int)(Math.random()*9)+1;
-		solution = n1*n2;
-		problem = ""+n1+"*"+n2;
-		radius = 8;
-	}
-
-	public String getProblem()
-	{
-		return problem;
-	}
-
-	public int getSolution()
-	{
-		return solution;
-	}
-}
-
-
 abstract class ListeningGameComponent extends GameComponent implements MouseListener, MouseMotionListener, KeyListener
 {
 	public boolean mousePressed1 = false, mousePressed2 = false, mousePressed3 = false;
@@ -518,74 +414,7 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 		keysPressed = new ArrayList();
 	}
 }
-class Level
-{
-	protected Vector<Enemy> enemies;
-	protected Vector<Enemy> actives;
-	protected int active;
-	public int key;
 
-	public Level(int active, int key, Vector<Enemy> enemies)
-	{
-		this.active = active;
-		this.key = key;
-		this.enemies = enemies;
-		actives = new Vector();
-	}
-
-	public int process(int solution)
-	{
-		int killed = 0;
-		for(int i = 0; i < actives.size(); i++)
-		{
-			if(actives.get(i).getSolution()==solution)
-			{
-				actives.get(i).die();
-				killed++;
-			}
-		}
-		return killed;
-	}
-
-	public int getHitting()
-	{
-		int hitting = 0;
-		for(int i = 0; i < actives.size(); i++)
-			if(actives.get(i).hitting())
-				hitting++;
-		return hitting;
-	}
-
-	public boolean finished()
-	{
-		return actives.size()==0&&enemies.size()==0;
-	}
-
-	public void update()
-	{
-		if(actives.size()<active&&enemies.size()>0&&Math.random()<Util.ENEMY_FREQUENCY*active)
-		{
-			actives.add(enemies.remove((int)(Math.random()*enemies.size())));
-		}
-		for(int i = 0; i < actives.size(); i++)
-		{
-			actives.get(i).update();
-			if(actives.get(i).dead())
-			{
-				actives.remove(i);
-				i--;
-			}
-		}
-	}
-
-	public void drawEnemies(Graphics g)
-	{
-		for(int i = 0; i < actives.size(); i++)
-		{
-			actives.get(i).draw(g);
-		}
-	}
-}
 
 abstract class GameComponent extends JPanel
 {
@@ -744,7 +573,57 @@ abstract class GameComponent extends JPanel
 	public abstract void update();
 }
 
+class Player
+{
+	protected int maxHealth = 100;
+	protected int health = maxHealth;
+	protected int exp = 0;
+	protected int expToNextLevel = 10;
+	protected int level = 1;
 
+	public void hit(int amount)
+	{
+		health-=amount;
+	}
+
+	public void heal()
+	{
+		health = maxHealth;
+	}
+
+	public boolean dead()
+	{
+		return health <= 0;
+	}
+
+	public void addExp(int amount)
+	{
+		exp+=amount;
+		while(exp>expToNextLevel)
+			levelUp();
+	}
+
+	public void levelUp()
+	{
+		exp-=expToNextLevel;
+		expToNextLevel*=2;
+		maxHealth+=25;
+		level++;
+	}
+
+	public void draw(Graphics g)
+	{
+		g.setColor(Color.BLUE);
+		g.fillOval(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS,Util.PLAYER_RADIUS*2,Util.PLAYER_RADIUS*2);
+		g.setColor(Color.RED);
+		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2,5);
+		g.setColor(Color.GREEN);
+		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2*health/maxHealth,5);
+		g.setColor(Color.BLUE);
+		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-1,
+			Util.PLAYER_RADIUS*2*exp/expToNextLevel,1);
+	}
+}
 
 abstract class Enemy
 {
@@ -851,6 +730,77 @@ abstract class Enemy
 		}
 	}
 }
+
+class Level
+{
+	protected Vector<Enemy> enemies;
+	protected Vector<Enemy> actives;
+	protected int active;
+	public int key;
+
+	public Level(int active, int key, Vector<Enemy> enemies)
+	{
+		this.active = active;
+		this.key = key;
+		this.enemies = enemies;
+		actives = new Vector();
+	}
+
+	public int process(int solution)
+	{
+		int killed = 0;
+		for(int i = 0; i < actives.size(); i++)
+		{
+			if(actives.get(i).getSolution()==solution)
+			{
+				actives.get(i).die();
+				killed++;
+			}
+		}
+		return killed;
+	}
+
+	public int getHitting()
+	{
+		int hitting = 0;
+		for(int i = 0; i < actives.size(); i++)
+			if(actives.get(i).hitting())
+				hitting++;
+		return hitting;
+	}
+
+	public boolean finished()
+	{
+		return actives.size()==0&&enemies.size()==0;
+	}
+
+	public void update()
+	{
+		if(actives.size()<active&&enemies.size()>0&&Math.random()<Util.ENEMY_FREQUENCY*active)
+		{
+			actives.add(enemies.remove((int)(Math.random()*enemies.size())));
+		}
+		for(int i = 0; i < actives.size(); i++)
+		{
+			actives.get(i).update();
+			if(actives.get(i).dead())
+			{
+				actives.remove(i);
+				i--;
+			}
+		}
+	}
+
+	public void drawEnemies(Graphics g)
+	{
+		for(int i = 0; i < actives.size(); i++)
+		{
+			actives.get(i).draw(g);
+		}
+	}
+}
+
+// Calculations of the game
 class Addition extends Enemy
 {
 	protected String problem;
@@ -876,6 +826,83 @@ class Addition extends Enemy
 	}
 }
 
+class Division extends Enemy
+{
+	protected String problem;
+	protected int solution;
+
+	public Division()
+	{
+		super(.3);
+		int n1 = (int)(Math.random()*9)+1;
+		int n2 = (int)(Math.random()*9)+1;
+		solution = n1;
+		problem = ""+(n1*n2)+"/"+n2;
+		radius = 8;
+		color = java.awt.Color.RED;
+	}
+
+	public String getProblem()
+	{
+		return problem;
+	}
+
+	public int getSolution()
+	{
+		return solution;
+	}
+}
+class Subtraction extends Enemy
+{
+	protected String problem;
+	protected int solution;
+
+	public Subtraction()
+	{
+		super(.4);
+		int n1 = (int)(Math.random()*9)+1;
+		int n2 = (int)(Math.random()*9)+1;
+		solution = n1;
+		problem = ""+(n1+n2)+"-"+n2;
+		color = java.awt.Color.RED;
+	}
+
+	public String getProblem()
+	{
+		return problem;
+	}
+
+	public int getSolution()
+	{
+		return solution;
+	}
+}
+
+class Multiplication extends Enemy
+{
+	protected String problem;
+	protected int solution;
+
+	public Multiplication()
+	{
+		super(.4);
+		int n1 = (int)(Math.random()*9)+1;
+		int n2 = (int)(Math.random()*9)+1;
+		solution = n1*n2;
+		problem = ""+n1+"*"+n2;
+		radius = 8;
+	}
+
+	public String getProblem()
+	{
+		return problem;
+	}
+
+	public int getSolution()
+	{
+		return solution;
+	}
+}
 class BigAddition extends Enemy
 {
 	protected String problem;
@@ -928,29 +955,3 @@ class BigMultiplication extends Enemy
 	}
 }
 
-class Division extends Enemy
-{
-	protected String problem;
-	protected int solution;
-
-	public Division()
-	{
-		super(.3);
-		int n1 = (int)(Math.random()*9)+1;
-		int n2 = (int)(Math.random()*9)+1;
-		solution = n1;
-		problem = ""+(n1*n2)+"/"+n2;
-		radius = 8;
-		color = java.awt.Color.RED;
-	}
-
-	public String getProblem()
-	{
-		return problem;
-	}
-
-	public int getSolution()
-	{
-		return solution;
-	}
-}
