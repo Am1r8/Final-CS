@@ -23,7 +23,7 @@ public class Game extends ListeningGameComponent
 	{
 		world.draw(g);
 		g.setColor(Color.BLACK);
-		g.drawString(typed,5,30);
+		g.drawString(typed,5,45);
 	}
 
 	public void keyTyped(KeyEvent ke)

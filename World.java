@@ -70,18 +70,20 @@ public class World
 		getLevel().drawEnemies(g);
 		player.draw(g);
 		g.setColor(Color.BLACK);
+		g.setFont(new Font("Dialog",Font.BOLD,14));
 		g.drawString("Level: "+(level+1),5,15);
+		g.drawString("Enter the Answer: ",5,30);
 		// g.drawString("Key: "+getLevel().key,Util.MAX_R*2-90,15);
 		if(win)
 		{
 			g.setColor(Color.GREEN);
-			g.setFont(new Font("Verdana",Font.BOLD,14));
+			g.setFont(new Font("Dialog",Font.BOLD,14));
 			g.drawString("You WIN!",140,150);
 		}
 		if(lose)
 		{
 			g.setColor(Color.RED);
-			g.setFont(new Font("Verdana",Font.BOLD,14));
+			g.setFont(new Font("Dialog",Font.BOLD,14));
 			g.drawString("You lose.",220,150);
 		}
 	}
@@ -717,6 +719,7 @@ abstract class Enemy
 	public void draw(Graphics g)
 	{
 		g.setColor(color);
+		g.setFont(new Font("Dialog",Font.BOLD,10));
 		g.drawString(getProblem(), x()-radius, y()-radius);
 		g.fillOval(x()-radius, y()-radius, radius*2, radius*2);
 		if(dying1)
