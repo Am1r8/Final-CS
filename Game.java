@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 public class Game extends ListeningGameComponent
 {
 	protected World world;
@@ -40,8 +44,24 @@ public class Game extends ListeningGameComponent
 			typed=typed+ke.getKeyChar();
 	}
 
+	public static void playmusic(String path){
+        try {
+            File file = new File(path);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            while (true) {
+                clip.start();
+                Thread.sleep(clip.getMicrosecondLength() / 1000);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 	public static void main(String[] args)
 	{
 		new Game().makeTestWindow();
+		playmusic("1.wav");
 	}
 }
