@@ -282,7 +282,6 @@ public class World
 
 /**
  * This class is for capturing the mouse and keyboard events.
- * @return the input that we get from the player
  */
 abstract class ListeningGameComponent extends GameComponent implements MouseListener, MouseMotionListener, KeyListener // create a class that extends GameComponent and implements MouseListener, MouseMotionListener, KeyListener
 {
@@ -480,7 +479,6 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 /**
  * This class is used to create a window that can be used to display graphics.
  * this game is made with help of JPanel and JFrame.
- * @return the graphics window
  */
 abstract class GameComponent extends JPanel
 {
@@ -577,7 +575,6 @@ abstract class GameComponent extends JPanel
 
 	/**
 		Creates a JFrame that contains this GameComponent.
-		@param title the title of the window
 		@return the JFrame
 	*/
 	public JFrame makeTestWindow()
@@ -594,7 +591,6 @@ abstract class GameComponent extends JPanel
 	/**
 		Creates a fullscreen JFrame that contains this GameComponent.
 		Note that the width and height of the component must be 640x480
-		@param title the title of the window
 		@return the JFrame created
 	*/
 	public JFrame makeFullScreenWindow()

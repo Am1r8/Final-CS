@@ -51,7 +51,7 @@ public class Game extends ListeningGameComponent
 
 	/**
 	 * This method is called when the user presses a key.
-	 * @param key The key that the user pressed.
+	 * @param ke The key that the user pressed.
 	 */
 	public void keyTyped(KeyEvent ke)
 	{
