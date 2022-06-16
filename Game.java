@@ -1,10 +1,17 @@
+/**
+Amirhosein Soleimanian
+Grade 11 Computer Science
+Mr.Benum
+*/
+
+//Import the necessary packages
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
 public class Game extends ListeningGameComponent
 {
 	protected World world;
