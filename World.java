@@ -108,8 +108,10 @@ public class World
 			g.drawString("You WIN!",140,150);
 			try {
 				FileWriter writer = new FileWriter("S.txt");
-				writer.write("1");
-				writer.close();
+				BufferedWriter bufferedWriter = new BufferedWriter(writer);
+				bufferedWriter.write("");
+				bufferedWriter.write(Integer.toString(Util.score));
+				bufferedWriter.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
