@@ -856,90 +856,134 @@ abstract class Enemy
 	public abstract String getProblem(); // get the problem of the enemy
 	public abstract int getSolution(); // get the solution of the enemy
 
+	/**
+	 * this method will draw the enemy
+	 * @param g the graphics
+	 * @param x the x coordinate of the enemy
+	 * @param y the y coordinate of the enemy
+	 * @param alpha the alpha of the enemy
+	 * @param color the color of the enemy
+	 * @param radius the radius of the enemy
+	 * @param arrowR the radius of the arrow
+	 * @param arrowX1 the x coordinate of the bullet/arrow
+	 * @param arrowY1 the y coordinate of the bullet/arrow
+	 * @param arrowX2 the x2 coordinate of the bullet/arrow
+	 * @param arrowY2 the y2 coordinate of the bullet/arrow
+	 * @param dying1 if the enemy is dying
+	 * @param dying2 if the enemy is dying
+	 * @param dead if the enemy is dead
+	 */
 	public void draw(Graphics g)
 	{
-		g.setColor(color);
-		g.setFont(new Font("Dialog",Font.BOLD,10));
-		g.drawString(getProblem(), x()-radius, y()-radius);
-		g.fillOval(x()-radius, y()-radius, radius*2, radius*2);
-		if(dying1)
+		g.setColor(color); // set the color of the enemy
+		g.setFont(new Font("Dialog",Font.BOLD,10)); // set the font of the enemy
+		g.drawString(getProblem(), x()-radius, y()-radius); // draw the problem of the enemy
+		g.fillOval(x()-radius, y()-radius, radius*2, radius*2); // draw the enemy
+		if(dying1) // if dying
 		{
-			g.setColor(Color.BLACK);
-			g.drawLine(arrowX1(),arrowY1(),arrowX2(),arrowY2());
+			g.setColor(Color.BLACK); // set the color of the enemy
+			g.drawLine(arrowX1(),arrowY1(),arrowX2(),arrowY2()); // draw the arrow
 		}
-		if(dying2)
+		if(dying2) // if dying 2
 		{
-			color = new Color(color.getRed(),color.getGreen(),color.getBlue(),alpha);
+			color = new Color(color.getRed(),color.getGreen(),color.getBlue(),alpha); // set the color of the enemy
 		}
 	}
 }
 
+/**
+ * this class will show the levels.
+ * like showing the enemies and the player
+ */
 class Level
 {
-	protected Vector<Enemy> enemies;
-	protected Vector<Enemy> actives;
-	protected int active;
-	public int key;
+	protected Vector<Enemy> enemies; // the enemies of the level
+	protected Vector<Enemy> actives; // the actives enemies of the level
+	protected int active; // the active enemy
+	public int key; // the key of the level
 
+	/**
+	 * this constructor will create the level
+	 * @param key the key of the level
+	 * @param enemies the enemies of the level
+	 * @param actives the actives enemies of the level
+	 */
 	public Level(int active, int key, Vector<Enemy> enemies)
 	{
-		this.active = active;
-		this.key = key;
-		this.enemies = enemies;
-		actives = new Vector();
+		this.active = active; // set the active enemy
+		this.key = key; // set the key of the level
+		this.enemies = enemies; // set the enemies of the level
+		actives = new Vector(); // create the actives enemies of the level
 	}
 
+	/**
+	 * this method will process the input from user and checks if it kills the enemy or no
+	 * @param solution The solution that the user has entered
+	 * @return if the user has killed the enemy
+	 */
 	public int process(int solution)
 	{
-		int killed = 0;
-		for(int i = 0; i < actives.size(); i++)
-		{
-			if(actives.get(i).getSolution()==solution)
-			{
-				actives.get(i).die();
-				killed++;
-				Util.score++;
+		int killed = 0; // the number of enemies killed
+		for(int i = 0; i < actives.size(); i++) { // for each active enemy
+			if(actives.get(i).getSolution()==solution) { // if the solution is correct
+				actives.get(i).die(); // set the enemy to dying
+				killed++; // increase the number of enemies killed
+				Util.score++; // increase the score
 			}
 		}
-		return killed;
+		return killed; // return the number of enemies killed
 	}
 
+	/**
+	 * this method is checking if the player is getting hit by the enemy
+	 * @return if the player is getting hit by the enemy
+	 */
 	public int getHitting()
 	{
-		int hitting = 0;
-		for(int i = 0; i < actives.size(); i++)
-			if(actives.get(i).hitting())
-				hitting++;
-		return hitting;
+		int hitting = 0; // The number of enemies hitting the player
+		for(int i = 0; i < actives.size(); i++) // for each active enemy
+			if(actives.get(i).hitting()) // if the enemy is hitting the player
+				hitting++; // increase the number of enemies hitting the player
+		return hitting;  // return the number of enemies hitting the player
 	}
 
+	/**
+	 * this method will check if all the enemies in the level are killed
+	 * @return if all the enemies in the level are killed
+	 */
 	public boolean finished()
 	{
-		return actives.size()==0&&enemies.size()==0;
+		return actives.size()==0&&enemies.size()==0; // return if the level is finished
 	}
 
+	/**
+	 * this method will update the level
+	 */
 	public void update()
 	{
-		if(actives.size()<active&&enemies.size()>0&&Math.random()<Util.ENEMY_FREQUENCY*active)
-		{
-			actives.add(enemies.remove((int)(Math.random()*enemies.size())));
+		if(actives.size()<active&&enemies.size()>0&&Math.random()<Util.ENEMY_FREQUENCY*active) { // if there are less active enemies than the active enemy and there are enemies in the level and the enemy is spawning
+			actives.add(enemies.remove((int)(Math.random()*enemies.size()))); // add the enemy to the actives enemies
 		}
-		for(int i = 0; i < actives.size(); i++)
+		for(int i = 0; i < actives.size(); i++) // for each active enemy
 		{
-			actives.get(i).update();
-			if(actives.get(i).dead())
+			actives.get(i).update(); // update the enemy
+			if(actives.get(i).dead()) // if the enemy is dead
 			{
-				actives.remove(i);
-				i--;
+				actives.remove(i); // remove the enemy from the actives enemies
+				i--; // decrease the index
 			}
 		}
 	}
 
+	/**
+	 * this method will draw the enemies
+	 * @param g the graphics
+	 */
 	public void drawEnemies(Graphics g)
 	{
-		for(int i = 0; i < actives.size(); i++)
+		for(int i = 0; i < actives.size(); i++) // for each active enemy
 		{
-			actives.get(i).draw(g);
+			actives.get(i).draw(g); // draw the enemy
 		}
 	}
 }
