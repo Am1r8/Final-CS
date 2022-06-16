@@ -1,6 +1,13 @@
 import java.awt.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.awt.image.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -11,6 +18,7 @@ class Util
 	public static final int ARROW_LENGTH = 20;
 	public static final double ARROW_SPEED = 2;
 	public static final double ENEMY_FREQUENCY = 1;
+	public static int score;
 }
 
 public class World
@@ -67,24 +75,59 @@ public class World
 
 	public void draw(Graphics g)
 	{
+		try {
+			FileReader reader = new FileReader("S.txt");
+			BufferedReader bufferedReader = new BufferedReader(reader);
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				Util.score = Integer.parseInt(line);
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			FileWriter writer = new FileWriter("S.txt");
+			BufferedWriter bufferedWriter = new BufferedWriter(writer);
+			bufferedWriter.write("");
+			bufferedWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		getLevel().drawEnemies(g);
 		player.draw(g);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Dialog",Font.BOLD,14));
 		g.drawString("Level: "+(level+1),5,15);
 		g.drawString("Enter the Answer: ",5,30);
-		// g.drawString("Key: "+getLevel().key,Util.MAX_R*2-90,15);
+		g.drawString("score: "+ Util.score,5,45);
 		if(win)
 		{
 			g.setColor(Color.GREEN);
 			g.setFont(new Font("Dialog",Font.BOLD,14));
 			g.drawString("You WIN!",140,150);
+			try {
+				FileWriter writer = new FileWriter("S.txt");
+				writer.write("1");
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		if(lose)
 		{
 			g.setColor(Color.RED);
 			g.setFont(new Font("Dialog",Font.BOLD,14));
 			g.drawString("You lose.",220,150);
+			try {
+				FileWriter writer = new FileWriter("S.txt");
+				BufferedWriter bufferedWriter = new BufferedWriter(writer);
+				bufferedWriter.write("");
+				bufferedWriter.write(Integer.toString(Util.score));
+				bufferedWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -758,6 +801,7 @@ class Level
 			{
 				actives.get(i).die();
 				killed++;
+				Util.score++;
 			}
 		}
 		return killed;
@@ -957,4 +1001,3 @@ class BigMultiplication extends Enemy
 		return solution;
 	}
 }
-
