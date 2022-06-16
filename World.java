@@ -648,146 +648,213 @@ abstract class GameComponent extends JPanel
 	public abstract void update();
 }
 
+/**
+ * This class is for the player, everything for the player is located here.
+ * such as health, level and etc
+ */
 class Player
 {
-	protected int maxHealth = 100;
-	protected int health = maxHealth;
-	protected int exp = 0;
-	protected int expToNextLevel = 10;
-	protected int level = 1;
+	protected int maxHealth = 100; // the max health of the player
+	protected int health = maxHealth; // the current health of the player
+	protected int exp = 0; // the current exp of the player
+	protected int expToNextLevel = 10; // the amount of exp needed to level up
+	protected int level = 1; // the current level of the player
 
-	public void hit(int amount)
-	{
-		health-=amount;
+	/**
+	 * if the player is hit by an enemy this method will be called and it will decrease the health of the player
+	 * @param amount the amount of damage the enemy does
+	 */
+	public void hit(int amount) {
+		health-=amount; // subtract the amount from the health
 	}
 
-	public void heal()
-	{
+	/**
+	 * heal class will heal the player when it is called
+	 */
+	public void heal() {
 		health = maxHealth;
 	}
 
-	public boolean dead()
-	{
+	/**
+	 * this is for when the player is dead and it will return that the player is dead and health is zero.
+	 * @return if the player is dead
+	 */
+	public boolean dead() {
 		return health <= 0;
 	}
 
+	/**
+	 * this method will increase the exp of the player
+	 * @param amount the amount of exp to increase
+	 */
 	public void addExp(int amount)
 	{
-		exp+=amount;
-		while(exp>expToNextLevel)
-			levelUp();
+		exp+=amount; // add the amount of exp to the current exp
+		while(exp>expToNextLevel) // while the exp is greater than the exp to next level
+			levelUp(); // level up
 	}
 
+	/**
+	 * this method will level up the player, very basic lol
+	 */
 	public void levelUp()
 	{
-		exp-=expToNextLevel;
-		expToNextLevel*=2;
-		maxHealth+=25;
-		level++;
+		exp-=expToNextLevel; // subtract the exp to next level from the current exp
+		expToNextLevel*=2; // double the exp to next level
+		maxHealth+=25; // add 25 health to the max health
+		level++; // increase the level
 	}
 
+	/**
+	 * in the draw we will draw how the character looks like and how much health it has, thats basically it.
+	 */
 	public void draw(Graphics g)
 	{
-		g.setColor(Color.MAGENTA);
-		g.fillOval(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS,Util.PLAYER_RADIUS*2,Util.PLAYER_RADIUS*2);
-		g.setColor(Color.ORANGE);
-		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2,5);
-		g.setColor(Color.GREEN);
-		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2*health/maxHealth,5);
-		g.setColor(Color.YELLOW);
-		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-1,
-			Util.PLAYER_RADIUS*2*exp/expToNextLevel,1);
+		g.setColor(Color.MAGENTA); // set the color to magenta
+		g.fillOval(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS,Util.PLAYER_RADIUS*2,Util.PLAYER_RADIUS*2); // draw the player
+		g.setColor(Color.ORANGE); // set the color to orange
+		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2,5); // draw the health bar
+		g.setColor(Color.GREEN); // set the color to green
+		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-6,Util.PLAYER_RADIUS*2*health/maxHealth,5); // draw the death bar
+		g.setColor(Color.YELLOW); // set the color to yellow
+		g.fillRect(Util.MAX_R-Util.PLAYER_RADIUS,Util.MAX_R-Util.PLAYER_RADIUS-1,Util.PLAYER_RADIUS*2*exp/expToNextLevel,1); // draw the exp bar
 	}
 }
 
+/**
+ * This class is for the enemy, everything for the enemy is located here.
+ * such as speed, death, animation, etc
+ * The bullet properties are located here too
+ */
 abstract class Enemy
 {
-	protected double r,t,speed;
-	protected Color color = Color.RED;
-	protected int radius = 7;
-	private boolean dying1 = false;
-	private boolean dying2 = false;
-	private boolean dead = false;
-	private int alpha = 255;
-	private int arrowR = Util.PLAYER_RADIUS+Util.ARROW_LENGTH;
+	protected double r,t,speed; // the radius, theta, and speed of the enemy
+	protected Color color = Color.RED; // the color of the enemy
+	protected int radius = 7; // the radius of the enemy
+	private boolean dying1 = false; // if the enemy is dying
+	private boolean dying2 = false; // if the enemy is dying
+	private boolean dead = false; // if the enemy is dead
+	private int alpha = 255; // the alpha of the enemy
+	private int arrowR = Util.PLAYER_RADIUS+Util.ARROW_LENGTH; // the radius of the arrow
 
+	/**
+	 * this method will draw the enemy, and sets the speed of the enemy
+	 * @param speed the speed of enemies
+	 */
 	public Enemy(double speed)
 	{
-		this.speed = speed;
-		r = Util.MAX_R;
-		t = Math.random()*Math.PI*2;
+		this.speed = speed; // set the speed of the enemy
+		r = Util.MAX_R; // set the radius of the enemy
+		t = Math.random()*Math.PI*2; // set the theta of the enemy
 	}
 
+	/**
+	 * The x coordinate of the enemy
+	 * @return the x coordinate of the enemy
+	 */
 	public int x()
 	{
-		return Util.MAX_R+(int)(Math.cos(t)*r+.5);
+		return Util.MAX_R+(int)(Math.cos(t)*r+.5); // return the x coordinate of the enemy 
 	}
 
+	/**
+	 * The y coordinate of the enemy
+	 * @return the y coordinate of the enemy
+	 */
 	public int y()
 	{
-		return Util.MAX_R+(int)(Math.sin(t)*r+.5);
+		return Util.MAX_R+(int)(Math.sin(t)*r+.5); // return the y coordinate of the enemy
 	}
 
+
+	/**
+	 * the x coordinate of the bullet/arrow
+	 * @return the x coordinate of the bullet/arrow
+	 */
 	private int arrowX1()
 	{
-		return Util.MAX_R+(int)(Math.cos(t)*arrowR+.5);
+		return Util.MAX_R+(int)(Math.cos(t)*arrowR+.5); // return the x coordinate of the bullet/arrow
 	}
 
+	/**
+	 * the y coordinate of the bullet/arrow
+	 * @return the y coordinate of the bullet/arrow
+	 */
 	private int arrowY1()
 	{
-		return Util.MAX_R+(int)(Math.sin(t)*arrowR+.5);
+		return Util.MAX_R+(int)(Math.sin(t)*arrowR+.5); // return the y coordinate of the bullet/arrow
 	}
 
+	/**
+	 * the x2 coordinate of the bullet/arrow
+	 * @return the x2 coordinate of the bullet/arrow
+	 */
 	private int arrowX2()
 	{
-		return Util.MAX_R+(int)(Math.cos(t)*(arrowR-Util.ARROW_LENGTH)+.5);
+		return Util.MAX_R+(int)(Math.cos(t)*(arrowR-Util.ARROW_LENGTH)+.5); // return the x2 coordinate of the bullet/arrow
 	}
 
+	/**
+	 * the y2 coordinate of the bullet/arrow
+	 * @return the y2 coordinate of the bullet/arrow
+	 */
 	private int arrowY2()
 	{
-		return Util.MAX_R+(int)(Math.sin(t)*(arrowR-Util.ARROW_LENGTH)+.5);
+		return Util.MAX_R+(int)(Math.sin(t)*(arrowR-Util.ARROW_LENGTH)+.5); // return the y2 coordinate of the bullet/arrow
 	}
 
+	/**
+	 * this method will be called if the enemy is dying
+	 */
 	public void die()
 	{
-		dying1 = true;
+		dying1 = true; // set the enemy to dying
 	}
 
+	/**
+	 * this method will be called if the enemy is dead
+	 * @return if the enemy is dead
+	 */
 	public boolean dead()
 	{
-		return dead;
+		return dead; // return if the enemy is dead
 	}
 
+	/**
+	 * this method will be called if the enemy is hitting the player
+	 * @return if the enemy is hitting the player
+	 */
 	public boolean hitting()
 	{
-		return r == Util.PLAYER_RADIUS+radius && !dying1;
+		return r == Util.PLAYER_RADIUS+radius && !dying1; // return if the enemy is hitting the player
 	}
 
 	public void update()
 	{
-		if(!dying2)
+		if(!dying2) // if the enemy is not dying
 		{
-			r-=speed;
-			if(r<Util.PLAYER_RADIUS+radius)
-				r = Util.PLAYER_RADIUS+radius;
+			r-=speed; // decrease the radius of the enemy
+			if(r<Util.PLAYER_RADIUS+radius) // if the enemy is too close to the player
+				r = Util.PLAYER_RADIUS+radius; // set the radius of the enemy to the player radius
 		}
 
-		if(dying2)
+		// the animation of the enemy dying
+		if(dying2) // if the enemy is dying
 		{
-			alpha/=1.1;
-			if(alpha==0)
-				dead = true;
+			alpha/=1.1; // decrease the alpha of the enemy
+			if(alpha==0) // if the alpha is 0
+				dead = true; // set the enemy to dead
 		}
-		else if(dying1)
+		else if(dying1) // if the enemy is dying
 		{
-			arrowR+=Util.ARROW_SPEED;
-			if(arrowR>=r)
-				dying2 = true;
+			arrowR+=Util.ARROW_SPEED; // increase the radius of the arrow
+			if(arrowR>=r) // if the arrow is too big
+				dying2 = true; // set the enemy to dying
 		}
 	}
 
-	public abstract String getProblem();
-	public abstract int getSolution();
+	public abstract String getProblem(); // get the problem of the enemy
+	public abstract int getSolution(); // get the solution of the enemy
 
 	public void draw(Graphics g)
 	{
