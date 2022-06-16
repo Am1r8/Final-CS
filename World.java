@@ -360,7 +360,6 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 			mousePressed3 = false; // set the mouse pressed to false
 	}
 
-
 	/**
 		Updates the mouse variables.
 	*/
@@ -376,29 +375,23 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 		mouseY = e.getY(); // set the mouse y to the y location of the mouse
 	}
 
-
 	/**
 		Updates the mouse variables.
 	*/
 	public void mouseMoved(MouseEvent e)
 	{
-		mousePressed1 = false;
-		mousePressed2 = false;
-		mousePressed3 = false;
-
-		mouseX = e.getX();
-		mouseY = e.getY();
+		mousePressed1 = false; // set the mouse pressed to false
+		mousePressed2 = false; // set the mouse pressed to false
+		mousePressed3 = false; // set the mouse pressed to false
+		mouseX = e.getX(); // set the mouse x to the x location of the mouse
+		mouseY = e.getY(); // set the mouse y to the y location of the mouse
 	}
-
 
 	/**
 		Updates the keyboard variables.
 	*/
-	public void keyPressed(KeyEvent e)
-	{
-		if(debug)
-			System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
-		keysPressed.add(KeyEvent.getKeyText(e.getKeyCode()));
+	public void keyPressed(KeyEvent e){
+		// nothing here
 	}
 
 	/**
@@ -406,12 +399,12 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	*/
 	public void keyReleased(KeyEvent e)
 	{
-		for(int i = 0; i < keysPressed.size(); i++)
+		for(int i = 0; i < keysPressed.size(); i++) // for each key in the keys pressed array list
 		{
-			if(keysPressed.get(i).equals(KeyEvent.getKeyText(e.getKeyCode())))
+			if(keysPressed.get(i).equals(KeyEvent.getKeyText(e.getKeyCode()))) // if the key in the array list is the same as the key pressed
 			{
-				keysPressed.remove(i);
-				i--;
+				keysPressed.remove(i); // remove the key from the array list
+				i--; // decrement i
 			}
 		}
 	}
@@ -419,51 +412,53 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	/**
 		Updates the keyboard variables.
 	*/
-	public void keyTyped(KeyEvent e){}
+	public void keyTyped(KeyEvent e){
+		// nothing here
+	}
 
 	/**
 		Returns weather a mouse button is pressed.
-		return true if the button is pressed
+		@return true if the button is pressed
 	*/
 	public boolean isMousePressed(int b)
 	{
-		if(b == 1)
-			return mousePressed1;
-		else if(b == 2)
-			return mousePressed2;
-		else if(b == 3)
-			return mousePressed3;
+		if(b == 1) // if the button is the left button
+			return mousePressed1; // return the mouse pressed
+		else if(b == 2) // if the button is the middle button
+			return mousePressed2; // return the mouse pressed
+		else if(b == 3) // if the button is the right button
+			return mousePressed3; // return the mouse pressed
 
-		return false;
+		return false; // return false if the button is not the left, middle, or right button
 	}
 
 	/**
 		Returns weather any mouse button is pressed.
-		return true if the button is pressed
+		@return true if the button is pressed
 	*/
 	public boolean isMousePressed()
 	{
-		if(mousePressed1)
-			return mousePressed1;
-		else if(mousePressed2)
-			return mousePressed2;
-		else if(mousePressed3)
-			return mousePressed3;
+		if(mousePressed1) // if the left button is pressed
+			return mousePressed1; // return the mouse pressed
+		else if(mousePressed2) // if the middle button is pressed
+			return mousePressed2; // return the mouse pressed
+		else if(mousePressed3) // if the right button is pressed
+			return mousePressed3; // return the mouse pressed
 
-		return false;
+		return false; // return false if the button is not the left, middle, or right button
 	}
 
 	/**
 		Returns weather a mouse button is pressed.
-		return true if the key is pressed
+		@return true if the key is pressed
 	*/
 	public boolean isKeyPressed(String k)
 	{
-		for(int i = 0; i < keysPressed.size(); i++)
+		for(int i = 0; i < keysPressed.size(); i++) // for each key in the keys pressed array list
 		{
-			if(keysPressed.get(i).equalsIgnoreCase(k))
+			if(keysPressed.get(i).equalsIgnoreCase(k)) // if the key in the array list is the same as the key pressed
 			{
-				return true;
+				return true; // return true
 			}
 		}
 		return false;
@@ -475,50 +470,60 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 		return keysPressed.size();
 	}
 
+	// clears the keys pressed array list.
 	public void resetKeys()
 	{
 		keysPressed = new ArrayList();
 	}
 }
 
-
+/**
+ * This class is used to create a window that can be used to display graphics.
+ * this game is made with help of JPanel and JFrame.
+ * @return the graphics window
+ */
 abstract class GameComponent extends JPanel
 {
-	public static int WIDTH, HEIGHT;
-	protected BufferedImage background = null;
-	public int delay = 25;
+	public static int WIDTH, HEIGHT; // the width and height of the window
+	protected BufferedImage background = null; // the background image
+	public int delay = 25; // the delay of the game
 
 	/**
 		Constructs a GameComponent with a width of w, and a height of h.
+		@param w the width of the window
+		@param h the height of the window
 	*/
 	public GameComponent(int w, int h)
 	{
-		super();
-		WIDTH = w;
-		HEIGHT = h;
-		setSize(WIDTH, HEIGHT);
-		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		setBackground(Color.WHITE);
-		setVisible(true);
+		super(); // call the super constructor
+		WIDTH = w; // set the width
+		HEIGHT = h; // set the height
+		setSize(WIDTH, HEIGHT); // set the size of the window
+		setPreferredSize(new Dimension(WIDTH, HEIGHT)); // set the preferred size of the window
+		setBackground(Color.WHITE); // set the background color to white
+		setVisible(true); // set the window to visible
 	}
 
+	/**
+	 * start is where we gather all the graphics components and add them to the window.
+	 */
 	public void start()
 	{
-		Thread t = new Thread()
+		Thread t = new Thread() // create a new thread
 		{
-			public void run()
+			public void run() // run the graphics
 			{
-				while(true)
+				while(true) 
 				{
-					long time = System.currentTimeMillis();
-					if(background == null)
+					long time = System.currentTimeMillis(); // get the time
+					if(background == null) // if background is null
 					{
-						background = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-						background.getGraphics().setColor(Color.WHITE);
-						background.getGraphics().fillRect(0,0,WIDTH,HEIGHT);
+						background = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB); // create a new background
+						background.getGraphics().setColor(Color.WHITE); // set the background color to white
+						background.getGraphics().fillRect(0,0,WIDTH,HEIGHT); // fill the background with white
 					}
 
-					requestFocus();
+					requestFocus(); // request focus from windows
 
 					//update game state
 					standardUpdates();
@@ -526,35 +531,36 @@ abstract class GameComponent extends JPanel
 
 					//draw stuff
 					standardDraw(getCanvas());
-					draw(background.getGraphics());
-					refreshImage();
+					draw(background.getGraphics()); // draw the background
+					refreshImage(); // refresh the page
 
-					time = System.currentTimeMillis()-time;
-					try
-					{
-						if(delay-(int)time > 0)
-							sleep(delay-(int)time);
+					time = System.currentTimeMillis()-time; 
+					try {
+						if(delay-(int)time > 0) // if the delay is greater than the time
+							sleep(delay-(int)time); // sleep for the difference
 					}
-					catch(Exception ex)
-					{
+					catch(Exception ex) { 
+						ex.printStackTrace(); // print the stack trace
 					}
 				}
 			}
 		};
-		try{Thread.sleep(500);}catch(Exception ex){}
-		t.start();
+		try{Thread.sleep(500);}catch(Exception ex){} // sleep for half a second
+		t.start(); // start the thread
 	}
 
-	//get a blank image to draw onto
+	/**get a blank image to draw onto
+	 * @return the blank image/the background
+	 */
 	private Graphics getCanvas()
 	{
-		if(background == null)
+		if(background == null) 
 		{
-			background = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+			background = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB); // create a new background
 		}
-		background.getGraphics().setColor(Color.WHITE);
-		background.getGraphics().fillRect(0,0,WIDTH,HEIGHT);
-		return background.getGraphics();
+		background.getGraphics().setColor(Color.WHITE); // set the background color to white
+		background.getGraphics().fillRect(0,0,WIDTH,HEIGHT); // fill the background with white
+		return background.getGraphics(); // return the background
 	}
 
 	//take the canvas that you have drawn on and draw it onto the component
@@ -562,31 +568,33 @@ abstract class GameComponent extends JPanel
 	{
 		if(background != null)
 		{
-			if(getGraphics() != null)
+			if(getGraphics() != null) // if the graphics is not null
 			{
-				getGraphics().drawImage(background,0,0,null);
+				getGraphics().drawImage(background,0,0,null); // draw the background
 			}
 		}
 	}
 
 	/**
 		Creates a JFrame that contains this GameComponent.
+		@param title the title of the window
+		@return the JFrame
 	*/
 	public JFrame makeTestWindow()
 	{
-		JFrame frame = new JFrame();
-		frame.getContentPane().setLayout(new FlowLayout());
-		frame.getContentPane().add(this);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		return frame;
+		JFrame frame = new JFrame(); // create a new frame
+		frame.getContentPane().setLayout(new FlowLayout()); // set the layout to flow layout
+		frame.getContentPane().add(this); // add the component to the frame
+		frame.pack(); // pack the frame
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // set the default close operation to exit on close
+		frame.setVisible(true); // set the frame to visible
+		return frame; // return the frame
 	}
 
 	/**
 		Creates a fullscreen JFrame that contains this GameComponent.
 		Note that the width and height of the component must be 640x480
-		return the JFrame created
+		@return the JFrame created
 	*/
 	public JFrame makeFullScreenWindow()
 	{
