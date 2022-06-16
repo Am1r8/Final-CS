@@ -594,50 +594,51 @@ abstract class GameComponent extends JPanel
 	/**
 		Creates a fullscreen JFrame that contains this GameComponent.
 		Note that the width and height of the component must be 640x480
+		@param title the title of the window
 		@return the JFrame created
 	*/
 	public JFrame makeFullScreenWindow()
 	{
-		JFrame frame = new JFrame();
-		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		DisplayMode oldDisplayMode = device.getDisplayMode();
-		DisplayMode newDisplayMode = new DisplayMode(640, 480, (oldDisplayMode.getBitDepth()), (oldDisplayMode.getRefreshRate()));
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(this, 0, 0);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(WIDTH, HEIGHT);
-		frame.setResizable(false);
-		frame.setUndecorated(true);
-		frame.setVisible(true);
-		if(device.isFullScreenSupported())
-		{
-			device.setFullScreenWindow(frame);
-			device.setDisplayMode(newDisplayMode);
+		JFrame frame = new JFrame(); // create a new frame
+		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(); // get the default screen device
+		DisplayMode oldDisplayMode = device.getDisplayMode(); // get the old display mode
+		DisplayMode newDisplayMode = new DisplayMode(640, 480, (oldDisplayMode.getBitDepth()), (oldDisplayMode.getRefreshRate())); // create a new display mode
+		frame.getContentPane().setLayout(null); // set the layout to null
+		frame.getContentPane().add(this, 0, 0); // add the component to the frame
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // set the default close operation to exit on close
+		frame.setSize(WIDTH, HEIGHT); // set the size of the frame
+		frame.setResizable(false); // set the frame to not be resizable
+		frame.setUndecorated(true); // set the frame to be undecorated
+		frame.setVisible(true); // set the frame to visible
+		if(device.isFullScreenSupported()) { // if the device is supported
+			device.setFullScreenWindow(frame); // set the device to the frame
+			device.setDisplayMode(newDisplayMode); // set the display mode
 		}
-		else
-		{
-			System.out.println("ARGS! NO FULLSCRENE!");
+		else {
+			System.out.println("Not supported to be fullscreen!"); // print out that fullscreen is not supported
 		}
-		return frame;
+		return frame; // return the frame
 	}
 
 	/**
 		Preforms the standard updates of the component.(Preformed before update() is called)
 	*/
-	public void standardUpdates()
-	{
+	public void standardUpdates(){
+		// nothing to do
 	}
 
 	/**
 		The method that draws the component.
+		@param g the graphics to draw on
 	*/
 	public abstract void draw(Graphics g);
 
 	/**
 		Draws the standard parts of the component. (Preformed before draw(Graphics) is called)
+		@param g the graphics to draw on
 	*/
-	public void standardDraw(Graphics g)
-	{
+	public void standardDraw(Graphics g){
+		// nothing to do
 	}
 
 
