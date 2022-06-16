@@ -1049,8 +1049,6 @@ class Division extends Enemy
 		int n2 = (int)(Math.random()*9)+1; // the second number
 		solution = n1; // the solution
 		problem = ""+(n1*n2)+"/"+n2; // the generated problem
-		radius = 8; // the radius
-		color = java.awt.Color.RED; // the color
 	}
 
 	/**
@@ -1090,7 +1088,6 @@ class Subtraction extends Enemy
 		int n2 = (int)(Math.random()*9)+1; // the second number
 		solution = n1; // the solution
 		problem = ""+(n1+n2)+"-"+n2; // the generated problem
-		color = java.awt.Color.RED; // the color
 	}
 
 	/**
@@ -1130,7 +1127,6 @@ class Multiplication extends Enemy
 		int n2 = (int)(Math.random()*9)+1; // the second number
 		solution = n1*n2; // the solution
 		problem = ""+n1+"*"+n2; // the generated problem
-		radius = 8; // the radius
 	}
 
 	/**
@@ -1170,7 +1166,6 @@ class BigAddition extends Enemy
 		int n2 = (int)(Math.random()*90)+10; // the second number (between 10 and 100)
 		solution = n1+n2; // the solution
 		problem = ""+n1+"+"+n2; // the generated problem
-		radius = 15; // the radius
 	}
 
 	/**
@@ -1210,7 +1205,6 @@ class BigMultiplication extends Enemy
 		int n2 = (int)(Math.random()*90)+10; // the second number (between 10 and 100)
 		solution = n1*n2; // the solution
 		problem = ""+n1+"*"+n2; // the generated problem
-		radius = 20; // the radius
 	}
 
 	/**
