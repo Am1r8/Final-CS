@@ -25,7 +25,7 @@ Mather:
 
 The full documentation is already upload in the link below and you can check it out!
 
-{Place holder}
+https://mather.vercel.app/package-summary.html
 
 **This documentation is made will help of javaDoc**
 ## How can I play this?
