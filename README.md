@@ -32,7 +32,7 @@ The full documentation is already upload in the link below and you can check it 
 
 It is very easy to play this game, you just need to be good at math!
 
-Double click on the .EXE file and start the game, when the game opens you have to be fast and start calculating.
+Double click on the .jar file and start the game, when the game opens you have to be fast and start calculating.
 
 1. choose one problem and write the digits you think is right!
 2. if you are right the bullet will hit the problem if not there will be no bullets and you have to try again.
@@ -58,7 +58,7 @@ Go to the project directory
 Start the game
 
 ```bash
-  Double click on the .EXE file and enjoy
+  Double click on the .jar file and enjoy
 ```
 
 
