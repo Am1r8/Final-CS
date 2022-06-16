@@ -1,13 +1,11 @@
 import java.awt.*;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.awt.image.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -100,7 +98,7 @@ public class World
 		g.setFont(new Font("Dialog",Font.BOLD,14));
 		g.drawString("Level: "+(level+1),5,15);
 		g.drawString("Enter the Answer: ",5,30);
-		g.drawString("score: "+ Util.score,5,45);
+		g.drawString("score: "+ Util.score,5,60);
 		if(win)
 		{
 			g.setColor(Color.GREEN);
