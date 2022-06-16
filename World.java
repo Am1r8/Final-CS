@@ -988,157 +988,248 @@ class Level
 	}
 }
 
-// Calculations of the game
+
+// All the calculation methods are located here
+
+/**
+ * Addition will generate a problem randomly for the user to solve like 2 + 2
+ * @return the problem
+ */
 class Addition extends Enemy
 {
-	protected String problem;
-	protected int solution;
+	protected String problem; // the problem of the enemy
+	protected int solution; // the solution of the enemy
 
+	/**
+	 * this constructor will create the addition problem
+	 */
 	public Addition()
 	{
-		super(.6);
-		int n1 = (int)(Math.random()*9)+1;
-		int n2 = (int)(Math.random()*9)+1;
-		solution = n1+n2;
-		problem = ""+n1+"+"+n2;
+		super(.6); // the speed
+		int n1 = (int)(Math.random()*9)+1; // the first number
+		int n2 = (int)(Math.random()*9)+1; // the second number
+		solution = n1+n2; // the solution
+		problem = ""+n1+"+"+n2; // the generated problem
 	}
 
+	/**
+	 * this method will get the problem
+	 * @return the problem
+	 */
 	public String getProblem()
 	{
-		return problem;
+		return problem; // return the problem
 	}
 
+	/**
+	 * this method will get the solution from the user
+	 * @return the solution that user entered
+	 */
 	public int getSolution()
 	{
-		return solution;
+		return solution; // return the solution
 	}
 }
 
+/**
+ * Division will generate a problem randomly for the user to solve like 2 / 2
+ */
 class Division extends Enemy
 {
-	protected String problem;
-	protected int solution;
+	protected String problem; // the problem of the enemy
+	protected int solution; // the solution of the enemy
 
+	/**
+	 * this constructor will create the division problem
+	 */
 	public Division()
 	{
-		super(.3);
-		int n1 = (int)(Math.random()*9)+1;
-		int n2 = (int)(Math.random()*9)+1;
-		solution = n1;
-		problem = ""+(n1*n2)+"/"+n2;
-		radius = 8;
-		color = java.awt.Color.RED;
+		super(.3); // the speed
+		int n1 = (int)(Math.random()*9)+1; // the first number
+		int n2 = (int)(Math.random()*9)+1; // the second number
+		solution = n1; // the solution
+		problem = ""+(n1*n2)+"/"+n2; // the generated problem
+		radius = 8; // the radius
+		color = java.awt.Color.RED; // the color
 	}
 
+	/**
+	 * this method will get the problem
+	 * @return the problem
+	 */
 	public String getProblem()
 	{
-		return problem;
+		return problem; // return the problem
 	}
 
+	/**
+	 * this method will get the solution from the user
+	 * @return the solution that user entered
+	 */
 	public int getSolution()
 	{
-		return solution;
+		return solution; // return the solution
 	}
 }
+
+/**
+ * Subtraction will generate a problem randomly for the user to solve like 2 - 2
+ */
 class Subtraction extends Enemy
 {
-	protected String problem;
-	protected int solution;
+	protected String problem; // the problem of the enemy
+	protected int solution; // the solution of the enemy
 
+	/**
+	 * this constructor will create the subtraction problem
+	 */
 	public Subtraction()
 	{
-		super(.4);
-		int n1 = (int)(Math.random()*9)+1;
-		int n2 = (int)(Math.random()*9)+1;
-		solution = n1;
-		problem = ""+(n1+n2)+"-"+n2;
-		color = java.awt.Color.RED;
+		super(.4); // the speed
+		int n1 = (int)(Math.random()*9)+1; // the first number
+		int n2 = (int)(Math.random()*9)+1; // the second number
+		solution = n1; // the solution
+		problem = ""+(n1+n2)+"-"+n2; // the generated problem
+		color = java.awt.Color.RED; // the color
 	}
 
+	/**
+	 * this method will get the problem
+	 * @return the problem
+	 */
 	public String getProblem()
 	{
 		return problem;
 	}
 
+	/**
+	 * this method will get the solution from the user
+	 * @return the solution that user entered
+	 */
 	public int getSolution()
 	{
-		return solution;
+		return solution; // return the solution
 	}
 }
 
+/**
+ * Multiplication will generate a problem randomly for the user to solve like 2 * 2
+ */
 class Multiplication extends Enemy
 {
-	protected String problem;
-	protected int solution;
+	protected String problem; // the problem of the enemy
+	protected int solution; // the solution of the enemy
 
+	/**
+	 * this constructor will create the multiplication problem
+	 */
 	public Multiplication()
 	{
-		super(.4);
-		int n1 = (int)(Math.random()*9)+1;
-		int n2 = (int)(Math.random()*9)+1;
-		solution = n1*n2;
-		problem = ""+n1+"*"+n2;
-		radius = 8;
+		super(.4); // the speed
+		int n1 = (int)(Math.random()*9)+1; // the first number
+		int n2 = (int)(Math.random()*9)+1; // the second number
+		solution = n1*n2; // the solution
+		problem = ""+n1+"*"+n2; // the generated problem
+		radius = 8; // the radius
 	}
 
+	/**
+	 * this method will get the problem
+	 * @return the problem
+	 */
 	public String getProblem()
 	{
-		return problem;
+		return problem; // return the problem
 	}
 
+	/**
+	 * this method will get the solution from the user
+	 * @return the solution that user entered
+	 */
 	public int getSolution()
 	{
-		return solution;
+		return solution; // return the solution
 	}
 }
+
+/**
+ * Big addition will generate a huge problem for the user.
+ */
 class BigAddition extends Enemy
 {
-	protected String problem;
-	protected int solution;
+	protected String problem; // the problem of the enemy
+	protected int solution; // the solution of the enemy
 
+	/**
+	 * this constructor will create the big addition problem
+	 */
 	public BigAddition()
 	{
-		super(.3);
-		int n1 = (int)(Math.random()*90)+10;
-		int n2 = (int)(Math.random()*90)+10;
-		solution = n1+n2;
-		problem = ""+n1+"+"+n2;
-		radius = 15;
+		super(.3); // the speed
+		int n1 = (int)(Math.random()*90)+10; // the first number (between 10 and 100)
+		int n2 = (int)(Math.random()*90)+10; // the second number (between 10 and 100)
+		solution = n1+n2; // the solution
+		problem = ""+n1+"+"+n2; // the generated problem
+		radius = 15; // the radius
 	}
 
+	/**
+	 * this method will get the problem
+	 * @return the problem
+	 */
 	public String getProblem()
 	{
-		return problem;
+		return problem; // return the problem
 	}
 
+	/**
+	 * this method will get the solution from the user
+	 * @return the solution that user entered
+	 */
 	public int getSolution()
 	{
-		return solution;
+		return solution; // return the solution
 	}
 }
 
+/**
+ * Big Multiplication will generate a huge problem for the user.
+ */
 class BigMultiplication extends Enemy
 {
-	protected String problem;
-	protected int solution;
+	protected String problem; // the problem of the enemy
+	protected int solution; // the solution of the enemy
 
+	/**
+	 * this constructor will create the big multiplication problem
+	 */
 	public BigMultiplication()
 	{
-		super(.05);
-		int n1 = (int)(Math.random()*90)+10;
-		int n2 = (int)(Math.random()*90)+10;
-		solution = n1*n2;
-		problem = ""+n1+"*"+n2;
-		radius = 20;
+		super(.05); // the speed
+		int n1 = (int)(Math.random()*90)+10; // the first number (between 10 and 100)
+		int n2 = (int)(Math.random()*90)+10; // the second number (between 10 and 100)
+		solution = n1*n2; // the solution
+		problem = ""+n1+"*"+n2; // the generated problem
+		radius = 20; // the radius
 	}
 
+	/**
+	 * this method will get the problem
+	 * @return the problem
+	 */
 	public String getProblem()
 	{
-		return problem;
+		return problem; // return the problem
 	}
 
+	/**
+	 * this method will get the solution from the user
+	 * @return the solution that user entered
+	 */
 	public int getSolution()
 	{
-		return solution;
+		return solution; // return the solution
 	}
 }
+
+// THE END
