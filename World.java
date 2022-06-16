@@ -1,3 +1,10 @@
+/**
+Amirhosein Soleimanian
+Grade 11 Computer Science
+Mr.Benum
+*/
+
+//Import the necessary packages
 import java.awt.*;
 import java.util.*;
 import java.awt.image.*;
@@ -9,6 +16,9 @@ import java.io.IOException;
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * The public variables are located in Util class
+ */
 class Util
 {
 	public static final int MAX_R = 250;
@@ -19,324 +29,335 @@ class Util
 	public static int score;
 }
 
+/**
+ * This is where the whole game components come together and it is called world
+ * @author Amirhosein Soleimanian
+ * @version 1.0
+ */
 public class World
 {
-	public Player player;
-	public Level[] levels;
-	public int level = 0;
-	public boolean win = false;
-	public boolean lose = false;
+	public Player player; //The player
+	public Level[] levels; //The levels
+	public int level = 0; //The current level
+	public boolean win = false; //if the player wins the game
+	public boolean lose = false; //This is used to determine if the player has lost
 
-	public World(Player player, Level... levels)
+	public World(Player player, Level... levels) //Constructor
 	{
-		this.player = player;
-		this.levels = levels;
+		this.player = player; //Initialize the player
+		this.levels = levels; //Initialize the levels
 	}
 
-	public void tryKey(int key)
+	public void tryKey(int key) //This is used to try a key
 	{
-		for(int i = 0; i < levels.length; i++)
+		for(int i = 0; i < levels.length; i++) // loop through all the levels and check the keys
 		{
-			if(levels[i].key==key)
+			if(levels[i].key==key) // if the key is correct
 			{
-				level = i;
-				i = levels.length;
+				level = i; // set the level to the current level
+				i = levels.length; 
 			}
 		}
 	}
 
-	public Level getLevel()
+	/**
+	 * This is used to get the level
+	 * @return the level
+	 */
+	public Level getLevel() //This is used to get the current level
 	{
-		return levels[level];
+		return levels[level]; // return the current level
 	}
 
-	public void update()
+	public void update() //This is used to update the world
 	{
-		if(!win && !lose)
+		if(!win && !lose) // if the player has not won or lost
 		{
-			getLevel().update();
-			player.hit(getLevel().getHitting());
-			if(player.dead())
-				lose = true;
-			if(getLevel().finished()&& !lose)
-			{
-				player.heal();
-				level++;
-				if(level==levels.length)
+			getLevel().update(); // update the level
+			player.hit(getLevel().getHitting()); // check if the player has hit the enemy
+			if(player.dead()) // if the player is dead
+				lose = true; // set the lose to true
+			if(getLevel().finished()&& !lose) // if the level is finished and the player has not lost
+			{ // set the level to the next level
+				player.heal(); // heal the player for the next level
+				level++; // change the level
+				if(level==levels.length) // if the level is the last level
 				{
-					win = true;
-					level--;
+					win = true; // set the win to true
+					level--; // set the level to the last level
 				}
 			}
 		}
 	}
 
-	public void draw(Graphics g)
+
+	public void draw(Graphics g) //This is used to draw the world
 	{
-		try {
-			FileReader reader = new FileReader("S.txt");
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				Util.score = Integer.parseInt(line);
+		try { 
+			FileReader reader = new FileReader("S.txt"); // read the file for the score variable
+			BufferedReader bufferedReader = new BufferedReader(reader); // create a buffered reader
+			String line; // create a string called line
+			while ((line = bufferedReader.readLine()) != null) { // while the line is not null or empty read the file
+				Util.score = Integer.parseInt(line); // set the score to the line (from string to int for the score)
 			}
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			reader.close(); // close the file
+		} catch (IOException e) { // if the file is not found
+			e.printStackTrace(); // print the error
 		}
-		try {
-			FileWriter writer = new FileWriter("S.txt");
-			BufferedWriter bufferedWriter = new BufferedWriter(writer);
-			bufferedWriter.write("");
-			bufferedWriter.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		try { // this will delete everything that is in the file
+			FileWriter writer = new FileWriter("S.txt"); // open the file we need to write to it for score.
+			BufferedWriter bufferedWriter = new BufferedWriter(writer); // create a buffered writer
+			bufferedWriter.write(""); // delete every item in the file
+			bufferedWriter.close(); // close the file
+		} catch (IOException e) { // if the file is not found
+			e.printStackTrace(); // print the error
 		}
-		getLevel().drawEnemies(g);
-		player.draw(g);
-		g.setColor(Color.BLACK);
-		g.setFont(new Font("Dialog",Font.BOLD,14));
-		g.drawString("Level: "+(level+1),5,15);
-		g.drawString("Enter the Answer: ",5,30);
-		g.drawString("score: "+ Util.score,5,60);
-		if(win)
+		getLevel().drawEnemies(g); // draw the enemies
+		player.draw(g); // draw the player
+		g.setColor(Color.BLACK); // set the color to black
+		g.setFont(new Font("Dialog",Font.BOLD,14)); // set the font to Dialog and bold and set size 14
+		g.drawString("Level: "+(level+1),5,15); // draw the level
+		g.drawString("Enter the Answer: ",5,30); // draw the question
+		g.drawString("score: "+ Util.score,5,60); // draw the score
+		if(win) // if the player has won
 		{
-			g.setColor(Color.GREEN);
-			g.setFont(new Font("Dialog",Font.BOLD,14));
-			g.drawString("You WIN!",140,150);
+			g.setColor(Color.GREEN); // set the text color to green
+			g.setFont(new Font("Dialog",Font.BOLD,14)); // set the font to Dialog and bold and set size 14
+			g.drawString("You WIN!",140,150); // draw the win message
 			try {
-				FileWriter writer = new FileWriter("S.txt");
-				BufferedWriter bufferedWriter = new BufferedWriter(writer);
-				bufferedWriter.write("");
-				bufferedWriter.write(Integer.toString(Util.score));
-				bufferedWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+				FileWriter writer = new FileWriter("S.txt"); // open the file we need to write to it for score.
+				BufferedWriter bufferedWriter = new BufferedWriter(writer); // create a buffered writer
+				bufferedWriter.write(""); // delete every item in the file
+				bufferedWriter.write(Integer.toString(Util.score)); // write the score to the file for future games
+				bufferedWriter.close(); // close the file
+			} catch (IOException e) { // if the file is not found
+				e.printStackTrace(); // print the error
 			}
 		}
-		if(lose)
+		if(lose) // if the player has lost
 		{
-			g.setColor(Color.RED);
-			g.setFont(new Font("Dialog",Font.BOLD,14));
-			g.drawString("You lose.",220,150);
+			g.setColor(Color.RED); // set the text color to red
+			g.setFont(new Font("Dialog",Font.BOLD,14)); // set the font to Dialog and bold and set size 14
+			g.drawString("You lose.",220,150); 	// draw the lose message
 			try {
-				FileWriter writer = new FileWriter("S.txt");
-				BufferedWriter bufferedWriter = new BufferedWriter(writer);
-				bufferedWriter.write("");
-				bufferedWriter.write(Integer.toString(Util.score));
-				bufferedWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+				FileWriter writer = new FileWriter("S.txt"); // open the file we need to write to it for score.
+				BufferedWriter bufferedWriter = new BufferedWriter(writer); // create a buffered writer
+				bufferedWriter.write(""); // delete every item in the file
+				bufferedWriter.write(Integer.toString(Util.score)); // write the score to the file for future games
+				bufferedWriter.close(); // close the file
+			} catch (IOException e) { // if the file is not found
+				e.printStackTrace(); // print the error
 			}
 		}
 	}
 
-	public static World getWorld()
+	/**
+	 * This class will make the levels and it is called get world
+	 * @return levels from 0 to 16
+	 */
+	public static World getWorld() //This is used to get the world
 	{
-		Player player = new Player();
+		Player player = new Player(); // create a new player
 
 		//Level 1
-		Vector<Enemy> l1e = new Vector();
-		for(int i = 0; i < 10; i ++) l1e.add(new Addition());
-		Level l1 = new Level(2,1234567,l1e);
+		Vector<Enemy> l1e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 10; i ++) l1e.add(new Addition()); // add 10 addition enemies to the vector
+		Level l1 = new Level(2,1234567,l1e); // create a level a key and a vector of enemies
 
 		//Level 2
-		Vector<Enemy> l2e = new Vector();
-		for(int i = 0; i < 8; i ++) l2e.add(new Addition());
-		for(int i = 0; i < 5; i ++) l2e.add(new Multiplication());
-		Level l2 = new Level(2,6394658,l2e);
+		Vector<Enemy> l2e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 8; i ++) l2e.add(new Addition()); // add 8 addition enemies to the vector
+		for(int i = 0; i < 5; i ++) l2e.add(new Multiplication()); // add 5 multiplication enemies to the vector
+		Level l2 = new Level(2,6394658,l2e); // create a level a key and a vector of enemies
 
 		//Level 3
-		Vector<Enemy> l3e = new Vector();
-		for(int i = 0; i < 5; i ++) l3e.add(new Addition());
-		for(int i = 0; i < 8; i ++) l3e.add(new Multiplication());
-		Level l3 = new Level(3,1563826,l3e);
+		Vector<Enemy> l3e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l3e.add(new Addition()); // add 5 addition enemies to the vector
+		for(int i = 0; i < 8; i ++) l3e.add(new Multiplication()); // add 8 multiplication enemies to the vector
+		Level l3 = new Level(3,1563826,l3e); // create a level a key and a vector of enemies
 
 		//Level 4
-		Vector<Enemy> l4e = new Vector();
-		for(int i = 0; i < 7; i ++) l4e.add(new Addition());
-		for(int i = 0; i < 7; i ++) l4e.add(new Multiplication());
-		for(int i = 0; i < 3; i ++) l4e.add(new Subtraction());
-		Level l4 = new Level(3,1927462,l4e);
+		Vector<Enemy> l4e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 7; i ++) l4e.add(new Addition()); // add 7 addition enemies to the vector
+		for(int i = 0; i < 7; i ++) l4e.add(new Multiplication()); // add 7 multiplication enemies to the vector
+		for(int i = 0; i < 3; i ++) l4e.add(new Subtraction()); // add 3 subtraction enemies to the vector
+		Level l4 = new Level(3,1927462,l4e); // create a level a key and a vector of enemies
 
 		//Level 5
-		Vector<Enemy> l5e = new Vector();
-		for(int i = 0; i < 7; i ++) l5e.add(new Addition());
-		for(int i = 0; i < 7; i ++) l5e.add(new Multiplication());
-		for(int i = 0; i < 5; i ++) l5e.add(new Subtraction());
-		for(int i = 0; i < 3; i ++) l5e.add(new Division());
-		Level l5 = new Level(3,3728465,l5e);
+		Vector<Enemy> l5e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 7; i ++) l5e.add(new Addition()); // add 7 addition enemies to the vector
+		for(int i = 0; i < 7; i ++) l5e.add(new Multiplication()); // add 7 multiplication enemies to the vector
+		for(int i = 0; i < 5; i ++) l5e.add(new Subtraction()); // add 5 subtraction enemies to the vector
+		for(int i = 0; i < 3; i ++) l5e.add(new Division()); // add 3 division enemies to the vector
+		Level l5 = new Level(3,3728465,l5e); // create a level a key and a vector of enemies
 
 		//Level 6
-		Vector<Enemy> l6e = new Vector();
-		for(int i = 0; i < 7; i ++) l6e.add(new Addition());
-		for(int i = 0; i < 7; i ++) l6e.add(new Multiplication());
-		for(int i = 0; i < 7; i ++) l6e.add(new Subtraction());
-		for(int i = 0; i < 5; i ++) l6e.add(new Division());
-		Level l6 = new Level(3,7384920,l6e);
+		Vector<Enemy> l6e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 7; i ++) l6e.add(new Addition()); // add 7 addition enemies to the vector
+		for(int i = 0; i < 7; i ++) l6e.add(new Multiplication()); // add 7 multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l6e.add(new Subtraction()); // add 7 subtraction enemies to the vector
+		for(int i = 0; i < 5; i ++) l6e.add(new Division()); // add 5 division enemies to the vector
+		Level l6 = new Level(3,7384920,l6e);  // create a level a key and a vector of enemies
 
 		//Level 7
-		Vector<Enemy> l7e = new Vector();
-		for(int i = 0; i < 5; i ++) l7e.add(new BigAddition());
-		for(int i = 0; i < 7; i ++) l7e.add(new Multiplication());
-		for(int i = 0; i < 7; i ++) l7e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l7e.add(new Division());
-		Level l7 = new Level(3,6374198,l7e);
+		Vector<Enemy> l7e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l7e.add(new BigAddition()); // add 5 big addition enemies to the vector
+		for(int i = 0; i < 7; i ++) l7e.add(new Multiplication()); // add 7 multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l7e.add(new Subtraction()); // add 7 subtraction enemies to the vector
+		for(int i = 0; i < 7; i ++) l7e.add(new Division()); // add 7 division enemies to the vector
+		Level l7 = new Level(3,6374198,l7e); // create a level a key and a vector of enemies
 
 		//Level 8
-		Vector<Enemy> l8e = new Vector();
-		for(int i = 0; i < 5; i ++) l8e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l8e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l8e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l8e.add(new Division());
-		Level l8 = new Level(3,2538610,l8e);
+		Vector<Enemy> l8e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l8e.add(new BigAddition()); // add 5 big addition enemies to the vector
+		for(int i = 0; i < 1; i ++) l8e.add(new BigMultiplication()); // add 1 big multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l8e.add(new Subtraction()); // add 7 subtraction enemies to the vector
+		for(int i = 0; i < 7; i ++) l8e.add(new Division()); // add 7 division enemies to the vector
+		Level l8 = new Level(3,2538610,l8e); // create a level a key and a vector of enemies
 
 		//Level 9
-		Vector<Enemy> l9e = new Vector();
-		for(int i = 0; i < 5; i ++) l9e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l9e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l9e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l9e.add(new Division());
+		Vector<Enemy> l9e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l9e.add(new BigAddition()); // add 5 big addition enemies to the vector
+		for(int i = 0; i < 1; i ++) l9e.add(new BigMultiplication()); // add 1 big multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l9e.add(new Subtraction()); // add 7 subtraction enemies to the vector
+		for(int i = 0; i < 7; i ++) l9e.add(new Division()); // add 7 division enemies to the vector
 		Level l9 = new Level(3,1527943,l9e);
 		
 		//Level 10
-		Vector<Enemy> l10e = new Vector();
-		for(int i = 0; i < 5; i ++) l10e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l10e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l10e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l10e.add(new Division());
+		Vector<Enemy> l10e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l10e.add(new Addition()); // add 5 addition enemies to the vector
+		for(int i = 0; i < 1; i ++) l10e.add(new Multiplication()); // add 1 multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l10e.add(new Subtraction()); // add 7 subtraction enemies to the vector
+		for(int i = 0; i < 7; i ++) l10e.add(new Division()); // add 7 division enemies to the vector
 		Level l10 = new Level(3,4268197,l10e);
 
 		//Level 11
-		Vector<Enemy> l11e = new Vector();
-		for(int i = 0; i < 5; i ++) l11e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l11e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l11e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l11e.add(new Division());
-		Level l11 = new Level(3,1738295,l11e);
+		Vector<Enemy> l11e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 2; i ++) l11e.add(new BigAddition()); // add 2 big addition enemies to the vector
+		for(int i = 0; i < 6; i ++) l11e.add(new BigMultiplication()); // add 6 big multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l11e.add(new Subtraction()); // add 7 subtraction enemies to the vector
+		Level l11 = new Level(3,1738295,l11e); // create a level a key and a vector of enemies
 
 		//Level 12
-		Vector<Enemy> l12e = new Vector();
-		for(int i = 0; i < 5; i ++) l12e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l12e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l12e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l12e.add(new Division());
-		Level l12 = new Level(3,0651243,l12e);
-
+		Vector<Enemy> l12e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l12e.add(new BigAddition()); // add 5 big addition enemies to the vector
+		for(int i = 0; i < 1; i ++) l12e.add(new BigMultiplication()); // add 1 big multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l12e.add(new Subtraction()); // add 7 subtraction enemies to the vector
+		for(int i = 0; i < 7; i ++) l12e.add(new Division()); // add 7 division enemies to the vector
+		Level l12 = new Level(3,0651243,l12e); // create a level a key and a vector of enemies
 
 		//Level 13
-		Vector<Enemy> l13e = new Vector();
-		for(int i = 0; i < 5; i ++) l13e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l13e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l13e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l13e.add(new Division());
+		Vector<Enemy> l13e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l13e.add(new BigAddition()); // add 5 big addition enemies to the vector
+		for(int i = 0; i < 1; i ++) l13e.add(new BigMultiplication()); // add 1 big multiplication enemies to the vector
+		for(int i = 0; i < 7; i ++) l13e.add(new Subtraction());	// add 7 subtraction enemies to the vector
+		for(int i = 0; i < 7; i ++) l13e.add(new Division()); // add 7 division enemies to the vector
 		Level l13 = new Level(3,3628491,l13e);
 
 
 		//Level 14
-		Vector<Enemy> l14e = new Vector();
-		for(int i = 0; i < 5; i ++) l14e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l14e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l14e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l14e.add(new Division());
-		Level l14 = new Level(3,4016275,l14e);
+		Vector<Enemy> l14e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 9; i ++) l14e.add(new Subtraction()); // add 9 subtraction enemies to the vector
+		for(int i = 0; i < 7; i ++) l14e.add(new Division()); // add 7 division enemies to the vector
+		Level l14 = new Level(3,4016275,l14e); 	// create a level a key and a vector of enemies
 
 
 		//Level 15
-		Vector<Enemy> l15e = new Vector();
-		for(int i = 0; i < 5; i ++) l15e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l15e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l15e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l15e.add(new Division());
-		Level l15 = new Level(3,6142063,l15e);
+		Vector<Enemy> l15e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 5; i ++) l15e.add(new BigAddition()); // add 5 big addition enemies to the vector
+		for(int i = 0; i < 7; i ++) l15e.add(new BigMultiplication()); // add 7 big multiplication enemies to the vector
+		Level l15 = new Level(3,6142063,l15e); // create a level a key and a vector of enemies
 
 		//Level 16
-		Vector<Enemy> l16e = new Vector();
-		for(int i = 0; i < 5; i ++) l16e.add(new BigAddition());
-		for(int i = 0; i < 1; i ++) l16e.add(new BigMultiplication());
-		for(int i = 0; i < 7; i ++) l16e.add(new Subtraction());
-		for(int i = 0; i < 7; i ++) l16e.add(new Division());
-		Level l16 = new Level(3,5390528,l16e);
+		Vector<Enemy> l16e = new Vector(); // create a vector for the enemies
+		for(int i = 0; i < 1; i ++) l16e.add(new BigAddition()); // add 1 big addition enemies to the vector
+		for(int i = 0; i < 7; i ++) l16e.add(new BigMultiplication()); // add 7 big multiplication enemies to the vector
+		for(int i = 0; i < 2; i ++) l16e.add(new Subtraction()); // add 2 subtraction enemies to the vector
+		for(int i = 0; i < 10; i ++) l16e.add(new Division()); // add 10 division enemies to the vector
+		Level l16 = new Level(3,5390528,l16e); // create a level a key and a vector of enemies
 
-		return new World(player,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16);
+		return new World(player,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16); // return the world
 	}
 }
 
-abstract class ListeningGameComponent extends GameComponent implements MouseListener, MouseMotionListener, KeyListener
+/**
+ * This class is for capturing the mouse and keyboard events.
+ * @return the input that we get from the player
+ */
+abstract class ListeningGameComponent extends GameComponent implements MouseListener, MouseMotionListener, KeyListener // create a class that extends GameComponent and implements MouseListener, MouseMotionListener, KeyListener
 {
-	public boolean mousePressed1 = false, mousePressed2 = false, mousePressed3 = false;
-	public ArrayList<String> keysPressed = new ArrayList();
-	public boolean debug = false;
+	public boolean mousePressed1 = false, mousePressed2 = false, mousePressed3 = false; // create a boolean for the mouse buttons
+	public ArrayList<String> keysPressed = new ArrayList(); // create an array list for the keys pressed
+	public boolean debug = false; // create a boolean for the debug mode
 
-	/**
-		The x location of the mouse.
-	*/
-	public int mouseX = 0;
-	/**
-		The y location of the mouse.
-	*/
-	public int mouseY = 0;
+	public int mouseX = 0; // The x location of the mouse.
+	public int mouseY = 0; // The y location of the mouse.
 
 	/**
 		Constructs a ListeningGameComponent with a width of w, and a height of h.
+		@param w the width of the component
+		@param h the height of the component
 	*/
-	public ListeningGameComponent(int w, int h)
+	public ListeningGameComponent(int w, int h) // create a constructor that takes in a width and height
 	{
-		super(w,h);
-		addMouseListener(this);
-		addMouseMotionListener(this);
-		addKeyListener(this);
+		super(w,h); // call the super constructor
+		addMouseListener(this); // add the mouse listener
+		addMouseMotionListener(this); // add the mouse motion listener
+		addKeyListener(this); // add the key listener
 	}
 
 	/**
-		The method that draws the component.
+		The method that draws the component called draw that gets the g "graphics" object.
 	*/
-	public abstract void draw(Graphics g);
+	public abstract void draw(Graphics g); 
 	/**
 		The method that updates the component.
 	*/
 	public abstract void update();
-
 	/**
 		Does nothing. Activated when the mouse is pressed and released.
 	*/
-	public void mouseClicked(MouseEvent e){}
-
+	public void mouseClicked(MouseEvent e){
+		// nothing here
+	}
 	/**
 		Does nothing. Activated when the mouse enters the component.
 	*/
-	public void mouseEntered(MouseEvent e){}
+	public void mouseEntered(MouseEvent e){
+		// nothing here
+	}
 
 	/**
 		Does nothing. Activated when the mouse exits the component.
 	*/
-	public void mouseExited(MouseEvent e){}
+	public void mouseExited(MouseEvent e){
+		// nothing here
+	}
 
 	/**
 		Updates the mouse variables.
 	*/
 	public void mousePressed(MouseEvent e)
 	{
-		if(e.getButton() == MouseEvent.BUTTON1)
-			mousePressed1 = true;
-		if(e.getButton() == MouseEvent.BUTTON2)
-			mousePressed2 = true;
-		if(e.getButton() == MouseEvent.BUTTON3)
-			mousePressed3 = true;
+		if(e.getButton() == MouseEvent.BUTTON1) // if the mouse button is the left button
+			mousePressed1 = true; // set the mouse pressed to true
+		if(e.getButton() == MouseEvent.BUTTON2) // if the mouse button is the middle button
+			mousePressed2 = true; // set the mouse pressed to true
+		if(e.getButton() == MouseEvent.BUTTON3) // if the mouse button is the right button
+			mousePressed3 = true; // set the mouse pressed to true
 	}
-
 
 	/**
 		Updates the mouse variables.
 	*/
 	public void mouseReleased(MouseEvent e)
 	{
-		if(e.getButton() == MouseEvent.BUTTON1)
-			mousePressed1 = false;
-		if(e.getButton() == MouseEvent.BUTTON2)
-			mousePressed2 = false;
-		if(e.getButton() == MouseEvent.BUTTON3)
-			mousePressed3 = false;
+		if(e.getButton() == MouseEvent.BUTTON1) // if the mouse button is the left button
+			mousePressed1 = false; // set the mouse pressed to false
+		if(e.getButton() == MouseEvent.BUTTON2) // if the mouse button is the middle button
+			mousePressed2 = false; // set the mouse pressed to false
+		if(e.getButton() == MouseEvent.BUTTON3) // if the mouse button is the right button
+			mousePressed3 = false; // set the mouse pressed to false
 	}
 
 
@@ -345,14 +366,14 @@ abstract class ListeningGameComponent extends GameComponent implements MouseList
 	*/
 	public void mouseDragged(MouseEvent e)
 	{
-		if(e.getButton() == MouseEvent.BUTTON1)
-			mousePressed1 = !mousePressed1;
-		if(e.getButton() == MouseEvent.BUTTON2)
-			mousePressed2 = !mousePressed2;
-		if(e.getButton() == MouseEvent.BUTTON3)
-			mousePressed3 = !mousePressed3;
-		mouseX = e.getX();
-		mouseY = e.getY();
+		if(e.getButton() == MouseEvent.BUTTON1) // if the mouse button is the left button
+			mousePressed1 = !mousePressed1; // set the mouse pressed to the opposite of what it was
+		if(e.getButton() == MouseEvent.BUTTON2) // if the mouse button is the middle button
+			mousePressed2 = !mousePressed2; // set the mouse pressed to the opposite of what it was
+		if(e.getButton() == MouseEvent.BUTTON3) // if the mouse button is the right button
+			mousePressed3 = !mousePressed3; // set the mouse pressed to the opposite of what it was
+		mouseX = e.getX(); // set the mouse x to the x location of the mouse
+		mouseY = e.getY(); // set the mouse y to the y location of the mouse
 	}
 
 
