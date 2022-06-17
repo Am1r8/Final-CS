@@ -40,7 +40,10 @@ Double click on the .jar file and start the game, when the game opens you have t
 4. ENJOY!
 ## Demo:
 
-Video will be uploaded soon!
+
+https://user-images.githubusercontent.com/68626539/174219634-be43353e-fe6e-4649-9a19-82dbc907b537.mp4
+
+
 ## Run Locally
 
 Clone the project
