@@ -571,7 +571,7 @@ abstract class GameComponent extends JPanel
 				getGraphics().drawImage(background,0,0,null); // draw the background
 			}
 		}
-	}
+	
 
 	/**
 		Creates a JFrame that contains this GameComponent.
